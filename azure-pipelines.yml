@@ -3,36 +3,40 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+trigger:
+- none
+
 pool:
-  vmImage: 'windows-latest'
+  vmImage:'windows-latest'
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  solution: '**/WebApplication1.sln'
+  project: '**/WebApplication1.csproj'
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '4.7.x'
-    installationPath: $(Agent.ToolsDirectory)/dotnet
-
 - task: NuGetToolInstaller@1
+  name: 'NuGetToolInstaller'
+  displayName: 'NuGet tool installer'
+  condition: 
 
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '**/*.sln'
+    command: 'restore'
+    restoreSolution: '$(solution)'
+    feedsToUse: 'select'
 
-- task: VSBuild@1
-  inputs:
-    solution: '**/*.sln'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)\\"'
-    platform: 'any cpu'
-    configuration: 'release'
 
-- task: CopyFiles@2
+- task: DotNetCoreCLI@2
   inputs:
-    contents: '**\*.zip'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configurations$(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: 'drop'
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
