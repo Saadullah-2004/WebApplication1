@@ -7,13 +7,13 @@ trigger:
 - none
 
 pool:
-  name: 'TestAgent'  # Change this to the name of your self-hosted agent pool
+  name: 'TestAgent'  # Use the name of your self-hosted agent pool
 
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  solution: '**/WebApplication1.sln'
-  project: '**/WebApplication1.csproj'
+  solution: 'WebApplication1/WebApplication1.sln'  # Correct path to the solution file
+  project: 'WebApplication1/WebApplication1/WebApplication1.csproj'  # Correct path to the project file
 
 steps:
 - task: NuGetToolInstaller@1
