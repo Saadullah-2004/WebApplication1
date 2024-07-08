@@ -12,7 +12,8 @@ pool:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  solution: 'WebApplication1/WebApplication1.sln'  # Correct path to the solution file
+  solution: 'WebApplication1.sln'  # Correct path to the solution file
+  project: 'WebApplication1/WebApplication1.csproj'  # Correct path to the project file
 
 steps:
 - task: NuGetToolInstaller@1
