@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  name: 'Default'  # Change this to the name of your self-hosted agent pool
+  name: 'windows-latest'  # Change this to the name of your self-hosted agent pool
 
 variables:
   buildPlatform: 'Any CPU'
