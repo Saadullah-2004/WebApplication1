@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  name: 'TestAgent'  # Use the name of your self-hosted agent pool
+  name: 'TestAgent'  
 
 variables:
   buildPlatform: 'Any CPU'
